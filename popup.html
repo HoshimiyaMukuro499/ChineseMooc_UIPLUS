@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>华文慕课 Plus</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="brand">
+      <span class="logo">慕</span>
+      <div>
+        <h1>华文慕课 Plus</h1>
+        <p>界面优化与学习增强</p>
+      </div>
+    </div>
+    <span class="ver">v2.0</span>
+  </header>
+
+  <section class="card">
+    <h2>主题</h2>
+    <div class="seg" id="themeSeg">
+      <button data-theme="auto">跟随系统</button>
+      <button data-theme="light">浅色</button>
+      <button data-theme="dark">深色</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>功能</h2>
+    <label class="switch">
+      <span>视频倍速 / 快捷键 / 画中画</span>
+      <input type="checkbox" id="videoToggle">
+      <i></i>
+    </label>
+    <label class="switch">
+      <span>课程筛选与排序</span>
+      <input type="checkbox" id="enhanceToggle">
+      <i></i>
+    </label>
+  </section>
+
+  <section class="card">
+    <h2>收藏 <span class="count" id="bmCount">0</span></h2>
+    <ul class="list" id="bmList"></ul>
+  </section>
+
+  <section class="card">
+    <h2>笔记 <span class="count" id="noteCount">0</span></h2>
+    <ul class="list" id="noteList"></ul>
+  </section>
+
+  <section class="card">
+    <h2>学习数据 <span class="count" id="learnUpdated">未同步</span></h2>
+    <div class="learn-grid">
+      <div class="learn-stat"><b id="learnMinutes">—</b><span>已学习 / 分钟</span></div>
+      <div class="learn-stat"><b id="learnCourses">—</b><span>进行中 / 课程</span></div>
+      <div class="learn-stat"><b id="learnPending">—</b><span>待交 / 作业</span></div>
+    </div>
+    <div class="learn-actions">
+      <button id="refreshLearnBtn">刷新学习数据</button>
+      <a id="openLearnBtn" href="https://www.chinesemooc.org/student/index.php" target="_blank">打开学习中心</a>
+    </div>
+    <p class="hint" id="learnHint">在已登录的学习中心页面会自动同源读取，只在本机解析和保存。</p>
+  </section>
+
+  <footer class="foot">
+    <button id="exportBtn">导出收藏与笔记</button>
+    <p class="hint">空格播放/暂停 · ←/→ 快退快进 · [ ] 调速 · F 全屏 · P 画中画 · / 搜索</p>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

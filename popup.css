@@ -1,0 +1,262 @@
+:root {
+  --bg: #f2f4f7;
+  --surface: #ffffff;
+  --surface-2: #f6f7f9;
+  --text: #1b2129;
+  --text-2: #5a6472;
+  --text-3: #8a93a1;
+  --border: #e2e6eb;
+  --accent: #0a66d8;
+  --accent-soft: #eaf2fd;
+  --radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1116;
+    --surface: #161b22;
+    --surface-2: #1c222b;
+    --text: #e7eaef;
+    --text-2: #a2acba;
+    --text-3: #78828f;
+    --border: #2a313b;
+    --accent: #5aa2ff;
+    --accent-soft: rgba(90, 162, 255, 0.14);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 340px;
+  margin: 0;
+  padding: 14px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei",
+    "PingFang SC", "Noto Sans SC", sans-serif;
+  font-size: 13px;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2px 2px 12px;
+}
+.brand { display: flex; gap: 10px; align-items: center; }
+.logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px -6px rgba(10, 102, 216, 0.55);
+}
+h1 { margin: 0; font-size: 15px; font-weight: 700; }
+.brand p { margin: 2px 0 0; font-size: 11px; color: var(--text-3); }
+.ver { font-size: 11px; color: var(--text-3); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.count {
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.seg {
+  display: flex;
+  gap: 6px;
+  background: var(--surface-2);
+  padding: 4px;
+  border-radius: 10px;
+}
+.seg button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-2);
+  padding: 7px 0;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.seg button:hover { color: var(--text); }
+.seg button.active {
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12);
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  cursor: pointer;
+  color: var(--text);
+}
+.switch + .switch { border-top: 1px dashed var(--border); }
+.switch input { display: none; }
+.switch i {
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--border);
+  position: relative;
+  transition: background 0.18s ease;
+  flex: 0 0 auto;
+}
+.switch i::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.18s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+.switch input:checked + i { background: var(--accent); }
+.switch input:checked + i::after { transform: translateX(14px); }
+
+.list { list-style: none; margin: 0; padding: 0; max-height: 190px; overflow: auto; }
+.list:empty::after {
+  content: "暂无内容";
+  display: block;
+  padding: 8px 2px;
+  color: var(--text-3);
+  font-size: 12px;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.list li:hover { background: var(--surface-2); }
+.list li .li-main { min-width: 0; flex: 1; }
+.list li .li-title {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list li .li-sub {
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list li button {
+  border: none;
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 3px 5px;
+  font-size: 14px;
+  line-height: 1;
+}
+.list li button:hover { background: var(--accent-soft); color: var(--accent); }
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--border);
+  overflow: hidden;
+}
+.learn-stat { padding: 10px 8px; background: var(--surface); text-align: center; }
+.learn-stat b {
+  display: block;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+.learn-stat span { display: block; margin-top: 3px; font-size: 10px; color: var(--text-3); }
+.learn-actions { display: flex; gap: 8px; margin-top: 10px; }
+.learn-actions button,
+.learn-actions a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 0;
+  border-radius: 9px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+}
+.learn-actions button:hover,
+.learn-actions a:hover { border-color: var(--accent); color: var(--accent); }
+
+.foot { padding: 2px; }
+#exportBtn {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 0;
+  border-radius: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+#exportBtn:hover { border-color: var(--accent); color: var(--accent); }
+.hint {
+  margin: 10px 2px 0;
+  color: var(--text-3);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+/* 显式主题覆盖（弹窗内即时切换） */
+html[data-theme="light"] {
+  --bg: #f2f4f7; --surface: #ffffff; --surface-2: #f6f7f9;
+  --text: #1b2129; --text-2: #5a6472; --text-3: #8a93a1;
+  --border: #e2e6eb; --accent: #0a66d8; --accent-soft: #eaf2fd;
+}
+html[data-theme="dark"] {
+  --bg: #0e1116; --surface: #161b22; --surface-2: #1c222b;
+  --text: #e7eaef; --text-2: #a2acba; --text-3: #78828f;
+  --border: #2a313b; --accent: #5aa2ff; --accent-soft: rgba(90,162,255,.14);
+}

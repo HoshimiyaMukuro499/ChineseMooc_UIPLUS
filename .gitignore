@@ -1,0 +1,13 @@
+# 抓取的真实页面（含个人信息与临时签名链接，不进入仓库）
+index.json
+my_course_list.json
+term_section_list-*.json
+student_content_video-*.json
+
+# 本地工具与系统文件
+.vscode/
+.idea/
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

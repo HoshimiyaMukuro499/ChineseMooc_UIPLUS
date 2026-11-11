@@ -1,0 +1,973 @@
+/* ==========================================================================
+   华文慕课 Plus — 界面增强样式
+   设计目标：去掉整屏照片背景带来的噪声，换成干净的浅色/深色表面；
+   课程卡片、详情页、页脚统一为一套现代设计语言。
+   ========================================================================== */
+
+html[data-cmpy-theme] {
+  --cmpy-radius: 14px;
+  --cmpy-font: "Unitick WenKai", "LXGW WenKai", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+  --cmpy-accent: #0a66d8;
+  --cmpy-accent-strong: #0a5cc4;
+  --cmpy-accent-soft: rgba(10, 102, 216, 0.08);
+  --cmpy-ink: #1d1d1f;
+  --cmpy-green: #1f9d48;
+  --cmpy-green-soft: rgba(31, 157, 72, 0.1);
+  --cmpy-amber: #c98a00;
+  --cmpy-amber-soft: rgba(201, 138, 0, 0.1);
+  --cmpy-red: #d93025;
+  --cmpy-gray: #8e8e93;
+  --cmpy-gray-soft: #f5f5f7;
+  --cmpy-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --cmpy-shadow-hover: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -6px rgba(0, 0, 0, 0.1);
+}
+
+html[data-cmpy-theme="light"] {
+  color-scheme: light;
+  --cmpy-bg: #f5f5f7;
+  --cmpy-surface: #ffffff;
+  --cmpy-surface-2: #f5f5f7;
+  --cmpy-text: #1d1d1f;
+  --cmpy-text-2: #6e6e73;
+  --cmpy-text-3: #aeaeb2;
+  --cmpy-on-ink: #ffffff;
+  --cmpy-border: #e8e8ed;
+  --cmpy-border-strong: #d2d2d7;
+  --cmpy-hero-veil: rgba(255, 255, 255, 0.72);
+}
+
+html[data-cmpy-theme="dark"] {
+  color-scheme: dark;
+  --cmpy-bg: #121316;
+  --cmpy-surface: #1f1f22;
+  --cmpy-surface-2: #252529;
+  --cmpy-text: #dcdce1;
+  --cmpy-text-2: #9b9ba3;
+  --cmpy-text-3: #5f5f67;
+  --cmpy-on-ink: #161618;
+  --cmpy-border: #2b2b30;
+  --cmpy-border-strong: #3b3b42;
+  --cmpy-accent: #5aa2ff;
+  --cmpy-accent-strong: #7ab5ff;
+  --cmpy-accent-soft: rgba(90, 162, 255, 0.16);
+  --cmpy-ink: #f2f2f4;
+  --cmpy-green: #3fbf6a;
+  --cmpy-green-soft: rgba(63, 191, 106, 0.14);
+  --cmpy-amber: #e0a72e;
+  --cmpy-amber-soft: rgba(224, 167, 46, 0.14);
+  --cmpy-red: #ff6b5e;
+  --cmpy-gray: #7c7c84;
+  --cmpy-gray-soft: #252529;
+  --cmpy-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --cmpy-shadow-hover: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 30px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* 字体与基础观感 */
+html[data-cmpy-theme] body,
+html[data-cmpy-theme] button,
+html[data-cmpy-theme] input,
+html[data-cmpy-theme] select,
+html[data-cmpy-theme] textarea {
+  font-family: var(--cmpy-font) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[data-cmpy-theme] body {
+  background: var(--cmpy-bg) !important;
+  color: var(--cmpy-text);
+}
+
+html[data-cmpy-theme] ::-webkit-scrollbar { width: 10px; height: 10px; }
+html[data-cmpy-theme] ::-webkit-scrollbar-thumb {
+  background: var(--cmpy-border-strong);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+html[data-cmpy-theme] ::-webkit-scrollbar-track { background: transparent; }
+
+/* 非首页：去掉照片背景，换成干净表面 */
+html[data-cmpy-theme] .cmpy-page-courses .pageBg,
+html[data-cmpy-theme] .cmpy-page-detail .pageBg,
+html[data-cmpy-theme] .cmpy-page-search .pageBg,
+html[data-cmpy-theme] .cmpy-page-student .pageBg,
+html[data-cmpy-theme] .cmpy-page-plain .pageBg {
+  display: none !important;
+}
+
+/* 首页：不再用整屏照片，改成干净的纯色 + 一点点柔光 */
+html[data-cmpy-theme] .cmpy-page-home .pageBg { display: none !important; }
+html[data-cmpy-theme] .cmpy-page-home #index,
+html[data-cmpy-theme] .cmpy-page-home #content_box { background: transparent !important; }
+html[data-cmpy-theme] body.cmpy-page-home,
+html[data-cmpy-theme] body.cmpy-page-home #public_main {
+  background:
+    radial-gradient(900px 480px at 82% -10%, var(--cmpy-accent-soft), transparent 65%),
+    radial-gradient(700px 420px at 8% 104%, color-mix(in srgb, var(--cmpy-accent) 6%, transparent), transparent 70%),
+    var(--cmpy-bg) !important;
+}
+
+/* 站点给整页盖了一层半透明黑（原本想看背景图），背景图已移除后改为透出主题底色 */
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-search, .cmpy-page-detail)
+  :is(.index, #course_list, #course_detail) {
+  background-color: transparent !important;
+}
+
+/* ============================ 顶栏 ============================ */
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header {
+  background: color-mix(in srgb, var(--cmpy-surface) 88%, transparent) !important;
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--cmpy-border);
+}
+
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header a,
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header .other,
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header .search {
+  color: var(--cmpy-text) !important;
+}
+
+/* 首页大搜索框：输入文字与占位符跟随主题 */
+html[data-cmpy-theme] .search_box input[name="search_keywords"] {
+  color: var(--cmpy-text) !important;
+}
+html[data-cmpy-theme] .search_box input[name="search_keywords"]::placeholder {
+  color: var(--cmpy-text-3) !important;
+}
+
+/* 站点 logo 是白色半透明图，浅色顶栏上反相成深色（保留红色印章色相） */
+html[data-cmpy-theme="light"] #public_header .header_logo_nav img {
+  filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(0.9);
+}
+
+/* 顶栏白色图标在浅色背景上反相为深灰 */
+html[data-cmpy-theme="light"] :is(.cmpy-page-courses, .cmpy-page-detail,
+  .cmpy-page-search, .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header .other img,
+html[data-cmpy-theme="light"] :is(.cmpy-page-courses, .cmpy-page-detail,
+  .cmpy-page-search, .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_header .search img {
+  filter: invert(1) brightness(0.42);
+}
+
+/* ====================== 左侧导航（改造成侧边栏） ====================== */
+#public_vertical_nav.cmpy-rail {
+  width: 148px !important;
+  min-width: 0 !important;
+  left: 24px !important;
+  top: 116px !important;
+  transform: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: var(--cmpy-surface);
+  border: 1px solid var(--cmpy-border);
+  border-radius: 18px;
+  box-shadow: var(--cmpy-shadow);
+  box-sizing: border-box;
+}
+#public_vertical_nav.cmpy-rail li { width: 100% !important; margin: 0 !important; }
+#public_vertical_nav.cmpy-rail li a {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: 100% !important;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--cmpy-text-2) !important;
+  font-size: 14px;
+  line-height: 1.2;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+#public_vertical_nav.cmpy-rail li a:hover { background: var(--cmpy-surface-2); color: var(--cmpy-text) !important; }
+#public_vertical_nav.cmpy-rail li.active a {
+  background: var(--cmpy-accent-soft);
+  color: var(--cmpy-accent) !important;
+  font-weight: 600;
+}
+#public_vertical_nav.cmpy-rail li a p {
+  color: inherit !important;
+  font-size: 14px !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+#public_vertical_nav.cmpy-rail .img_parent { display: none !important; }
+#public_vertical_nav.cmpy-rail svg { width: 18px; height: 18px; flex: 0 0 18px; }
+#public_vertical_nav.cmpy-rail li.active svg { color: var(--cmpy-accent); }
+
+/* ============================ 课程卡片 ============================ */
+html[data-cmpy-theme] .cmpy-page-courses #public_course_list,
+html[data-cmpy-theme] .cmpy-page-search #public_course_list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+html[data-cmpy-theme] .cmpy-page-courses #public_course_list > li.item,
+html[data-cmpy-theme] .cmpy-page-search #public_course_list > li.item {
+  width: auto !important;
+  margin: 0 !important;
+  padding-bottom: 46px !important;
+  background: var(--cmpy-surface) !important;
+  color: var(--cmpy-text) !important;
+  border: 1px solid var(--cmpy-border) !important;
+  border-radius: var(--cmpy-radius) !important;
+  box-shadow: var(--cmpy-shadow) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+html[data-cmpy-theme] .cmpy-page-courses #public_course_list > li.item:hover,
+html[data-cmpy-theme] .cmpy-page-search #public_course_list > li.item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--cmpy-shadow-hover) !important;
+  border-color: var(--cmpy-border-strong) !important;
+}
+/* 站点在 1200–1499px 会隐藏每页最后两门课（首页样式），这里全部显示 */
+html[data-cmpy-theme] .cmpy-page-courses #public_course_list > li.item:not([data-cmpy-hidden]),
+html[data-cmpy-theme] .cmpy-page-search #public_course_list > li.item:not([data-cmpy-hidden]) {
+  display: block !important;
+}
+html[data-cmpy-theme] .cmpy-page-courses #public_course_list > li.item[data-cmpy-hidden],
+html[data-cmpy-theme] .cmpy-page-search #public_course_list > li.item[data-cmpy-hidden] {
+  display: none !important;
+}
+/* 合并分页后让 swiper 容器按内容撑开，不再裁剪 */
+html[data-cmpy-theme] .cmpy-page-courses .course_list .swiper,
+html[data-cmpy-theme] .cmpy-page-courses .course_list .swiper-wrapper {
+  height: auto !important;
+  overflow: visible !important;
+}
+html[data-cmpy-theme] .cmpy-page-courses .course_list .swiper-button-next,
+html[data-cmpy-theme] .cmpy-page-courses .course_list .swiper-button-prev {
+  display: none !important;
+}
+
+html[data-cmpy-theme] .item > .item_top > .img_parent {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden;
+  background: var(--cmpy-surface-2);
+}
+html[data-cmpy-theme] .item > .item_top > .img_parent img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+
+html[data-cmpy-theme] .item .introduce_default { padding: 14px 16px 0 !important; }
+html[data-cmpy-theme] .item h5 {
+  display: block !important;
+  margin-bottom: 6px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
+  color: var(--cmpy-text) !important;
+}
+html[data-cmpy-theme] .item h5 p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  white-space: normal !important;
+  text-overflow: clip !important;
+}
+html[data-cmpy-theme] .item h5 > span {
+  display: inline-block !important;
+  position: static !important;
+  margin: 6px 0 0 !important;
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  line-height: 18px !important;
+  font-weight: 500;
+  white-space: nowrap;
+}
+html[data-cmpy-theme] .item h5 > span.term_end {
+  background: var(--cmpy-gray-soft) !important;
+  color: var(--cmpy-gray) !important;
+}
+html[data-cmpy-theme] .item h5 > span.progressing {
+  background: var(--cmpy-green-soft) !important;
+  color: var(--cmpy-green) !important;
+}
+html[data-cmpy-theme] .item h5 > span.begin {
+  background: var(--cmpy-amber-soft) !important;
+  color: var(--cmpy-amber) !important;
+}
+
+html[data-cmpy-theme] .item .info_num {
+  margin-top: 10px !important;
+  color: var(--cmpy-text-3) !important;
+  font-size: 12px;
+}
+html[data-cmpy-theme] .item .info_num li { color: inherit !important; }
+html[data-cmpy-theme="light"] .item .info_num img { filter: invert(1) brightness(0.55); }
+
+html[data-cmpy-theme] .item .introduce_hover {
+  background: var(--cmpy-surface) !important;
+  color: var(--cmpy-text-2) !important;
+  border-top: 1px solid var(--cmpy-border);
+  margin: 0 !important;
+  padding: 14px 16px 0 !important;
+  height: auto !important;
+}
+html[data-cmpy-theme] .item .introduce_hover p { color: var(--cmpy-text-2) !important; }
+html[data-cmpy-theme] .item .introduce_hover::before { display: none !important; }
+
+html[data-cmpy-theme] .item .study a {
+  display: block;
+  width: calc(100% - 32px) !important;
+  margin: 0 16px 16px !important;
+  line-height: 34px !important;
+  border-radius: 10px !important;
+  background: var(--cmpy-accent-soft) !important;
+  color: var(--cmpy-accent) !important;
+  font-weight: 600;
+  font-size: 13px !important;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+html[data-cmpy-theme] .item .study a:hover {
+  background: var(--cmpy-accent) !important;
+  color: #fff !important;
+}
+/* 卡片底部的学习按钮不参与绝对定位，改为常规流式 */
+html[data-cmpy-theme] .cmpy-page-courses .item .study,
+html[data-cmpy-theme] .cmpy-page-search .item .study {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 12px;
+}
+
+/* 收藏角标 */
+html[data-cmpy-theme] .item .mark_btn { color: var(--cmpy-text-2) !important; }
+
+/* ======================= 搜索页左侧分类栏 ======================= */
+html[data-cmpy-theme] .cmpy-page-search #public_vertical_nav_sub {
+  background: var(--cmpy-surface) !important;
+  border: 1px solid var(--cmpy-border);
+  border-radius: 16px;
+  box-shadow: var(--cmpy-shadow);
+}
+html[data-cmpy-theme] .cmpy-page-search #public_vertical_nav_sub a {
+  color: var(--cmpy-text-2) !important;
+  border-radius: 10px;
+}
+html[data-cmpy-theme] .cmpy-page-search #public_vertical_nav_sub a:hover {
+  background: var(--cmpy-surface-2) !important;
+  color: var(--cmpy-text) !important;
+}
+html[data-cmpy-theme] .cmpy-page-search #public_vertical_nav_sub li.active a {
+  background: var(--cmpy-accent-soft) !important;
+  color: var(--cmpy-accent) !important;
+  font-weight: 600;
+}
+html[data-cmpy-theme="light"] .cmpy-page-search #public_vertical_nav_sub li img {
+  filter: invert(1) brightness(0.45);
+}
+
+/* ======================= 课程页顶部标签 ======================= */
+html[data-cmpy-theme] .cmpy-page-courses #public_horizontal_nav li,
+html[data-cmpy-theme] .cmpy-page-search #public_horizontal_nav li {
+  background: transparent !important;
+  padding: 0 !important;
+}
+html[data-cmpy-theme] .cmpy-page-courses #public_horizontal_nav li a,
+html[data-cmpy-theme] .cmpy-page-search #public_horizontal_nav li a {
+  background: var(--cmpy-surface-2) !important;
+  color: var(--cmpy-text-2) !important;
+  border: 1px solid var(--cmpy-border);
+  font-size: 14px;
+  line-height: 40px !important;
+  padding: 0 24px !important;
+  border-radius: 999px !important;
+}
+html[data-cmpy-theme] .cmpy-page-courses #public_horizontal_nav li a:hover,
+html[data-cmpy-theme] .cmpy-page-search #public_horizontal_nav li a:hover {
+  color: var(--cmpy-text) !important;
+}
+html[data-cmpy-theme] .cmpy-page-courses #public_horizontal_nav li.active a,
+html[data-cmpy-theme] .cmpy-page-search #public_horizontal_nav li.active a {
+  background: var(--cmpy-accent) !important;
+  border-color: var(--cmpy-accent) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* ============================ 课程详情 ============================ */
+html[data-cmpy-theme] .cmpy-page-detail .detail_top,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_l,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r {
+  background: var(--cmpy-surface) !important;
+  border: 1px solid var(--cmpy-border) !important;
+  color: var(--cmpy-text) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: var(--cmpy-shadow);
+}
+
+html[data-cmpy-theme] .cmpy-page-detail #public_main h1,
+html[data-cmpy-theme] .cmpy-page-detail #public_main h2,
+html[data-cmpy-theme] .cmpy-page-detail #public_main h3,
+html[data-cmpy-theme] .cmpy-page-detail #public_main h4,
+html[data-cmpy-theme] .cmpy-page-detail #public_main h5,
+html[data-cmpy-theme] .cmpy-page-detail #public_main p,
+html[data-cmpy-theme] .cmpy-page-detail #public_main dt,
+html[data-cmpy-theme] .cmpy-page-detail #public_main dd,
+html[data-cmpy-theme] .cmpy-page-detail #public_main li,
+html[data-cmpy-theme] .cmpy-page-detail #public_main strong,
+html[data-cmpy-theme] .cmpy-page-detail #public_main .detail_top_r,
+html[data-cmpy-theme] .cmpy-page-detail #public_main .title_name,
+html[data-cmpy-theme] .cmpy-page-detail #public_main .title_collect,
+html[data-cmpy-theme] .cmpy-page-detail #public_main .detail_bottom_l,
+html[data-cmpy-theme] .cmpy-page-detail #public_main .detail_bottom_r {
+  color: var(--cmpy-text) !important;
+}
+
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .title_collect {
+  border-bottom-color: var(--cmpy-border) !important;
+}
+
+html[data-cmpy-theme] .cmpy-page-detail .detail_top .dd,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_l dd,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_l dt {
+  color: var(--cmpy-text-2) !important;
+}
+
+/* 详情页里的“课程信息”块与标签卡片 */
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r > div,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_l .swiper-slide dl {
+  background: var(--cmpy-surface-2) !important;
+  border: 1px solid var(--cmpy-border) !important;
+  border-radius: 12px !important;
+}
+
+html[data-cmpy-theme] .cmpy-page-detail .application a {
+  background: var(--cmpy-accent) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  font-weight: 600;
+}
+html[data-cmpy-theme] .cmpy-page-detail .application a:hover { background: var(--cmpy-accent-strong) !important; }
+
+/* 右栏半透明深色块改为与主题一致的浅色面板 */
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_t,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_b {
+  background: transparent !important;
+  border-color: var(--cmpy-border) !important;
+  color: var(--cmpy-text) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r a,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r .name_school,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r .name_school h5,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r .name_school p,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r .name_school ol,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r .name_school li,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_b h5,
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_b ol li {
+  color: var(--cmpy-text-2) !important;
+}
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_t .img_name_school h5 { color: var(--cmpy-text) !important; }
+html[data-cmpy-theme] .cmpy-page-detail .detail_bottom_r_t p { color: var(--cmpy-text-2) !important; }
+
+/* 课程信息块里的白字改回深色，否则在浅色面板上看不清 */
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .introduction {
+  background: var(--cmpy-surface-2) !important;
+  color: var(--cmpy-text) !important;
+}
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .introduction dt,
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .introduction dd,
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .title_collect ol,
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .title_collect ol li,
+html[data-cmpy-theme] .cmpy-page-detail .application span {
+  color: var(--cmpy-text-2) !important;
+}
+html[data-cmpy-theme] .cmpy-page-detail .detail_top_r .title_collect ul li {
+  background: var(--cmpy-surface-2) !important;
+  color: var(--cmpy-text-2) !important;
+  border-color: var(--cmpy-border) !important;
+  backdrop-filter: none !important;
+}
+
+html[data-cmpy-theme="light"] .cmpy-page-detail #public_main img[src*="icon_"] {
+  filter: invert(1) brightness(0.5);
+}
+
+/* 详情页顶部的课程封面大图保持原样 */
+html[data-cmpy-theme] .cmpy-page-detail .detail_top .no-vod img { filter: none !important; }
+
+/* ============================ 页脚 ============================ */
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_footer {
+  color: var(--cmpy-text-3) !important;
+  border-top-color: var(--cmpy-border) !important;
+  margin-top: 40px;
+}
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-detail, .cmpy-page-search,
+  .cmpy-page-student, .cmpy-page-plain, .cmpy-page-home) #public_footer a {
+  color: var(--cmpy-text-2) !important;
+}
+
+/* ============================ 筛选条 ============================ */
+#cmpy-filterbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin: 4px 0 18px;
+  padding: 12px 14px;
+  background: var(--cmpy-surface);
+  border: 1px solid var(--cmpy-border);
+  border-radius: 14px;
+  box-shadow: var(--cmpy-shadow);
+  font-family: var(--cmpy-font);
+  color: var(--cmpy-text);
+}
+#cmpy-filterbar .cmpy-seg { display: flex; gap: 6px; flex-wrap: wrap; }
+#cmpy-filterbar .cmpy-seg button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--cmpy-text-2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+#cmpy-filterbar .cmpy-seg button:hover { background: var(--cmpy-surface-2); color: var(--cmpy-text); }
+#cmpy-filterbar .cmpy-seg button.active {
+  background: var(--cmpy-accent-soft);
+  color: var(--cmpy-accent);
+  font-weight: 600;
+}
+#cmpy-filterbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--cmpy-text-2);
+}
+#cmpy-filterbar select {
+  appearance: none;
+  border: 1px solid var(--cmpy-border);
+  background: var(--cmpy-surface-2);
+  color: var(--cmpy-text);
+  padding: 6px 28px 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 15px) 55%, calc(100% - 10px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+#cmpy-filterbar .cmpy-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--cmpy-text-3);
+}
+
+/* ============================ 浮动工具条 ============================ */
+#cmpy-toolbar {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--cmpy-font);
+}
+#cmpy-toolbar button {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid var(--cmpy-border);
+  background: color-mix(in srgb, var(--cmpy-surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  color: var(--cmpy-text-2);
+  box-shadow: var(--cmpy-shadow);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+#cmpy-toolbar button:hover { transform: translateY(-2px); background: var(--cmpy-surface); color: var(--cmpy-text); }
+#cmpy-toolbar button.active { color: var(--cmpy-accent); border-color: var(--cmpy-accent); }
+#cmpy-toolbar button svg { width: 20px; height: 20px; }
+#cmpy-toolbar button::after {
+  content: attr(data-tip);
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--cmpy-text);
+  color: var(--cmpy-surface);
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 9px;
+  border-radius: 7px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+#cmpy-toolbar button:hover::after { opacity: 1; }
+
+/* ============================ 笔记抽屉 ============================ */
+#cmpy-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 92vw);
+  z-index: 99999;
+  background: var(--cmpy-surface);
+  border-left: 1px solid var(--cmpy-border);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--cmpy-font);
+  color: var(--cmpy-text);
+  transform: translateX(105%);
+  transition: transform 0.22s ease;
+}
+#cmpy-drawer.open { transform: translateX(0); }
+#cmpy-drawer .cmpy-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--cmpy-border);
+}
+#cmpy-drawer .cmpy-drawer-head h3 { margin: 0; font-size: 15px; font-weight: 600; }
+#cmpy-drawer .cmpy-drawer-head button {
+  border: none;
+  background: transparent;
+  color: var(--cmpy-text-2);
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+#cmpy-drawer .cmpy-drawer-head button:hover { background: var(--cmpy-surface-2); color: var(--cmpy-text); }
+#cmpy-drawer textarea {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 16px 18px;
+  background: transparent;
+  color: var(--cmpy-text);
+  font-size: 14px;
+  line-height: 1.7;
+  font-family: inherit;
+}
+#cmpy-drawer .cmpy-drawer-foot {
+  padding: 10px 18px;
+  border-top: 1px solid var(--cmpy-border);
+  font-size: 12px;
+  color: var(--cmpy-text-3);
+  display: flex;
+  justify-content: space-between;
+}
+#cmpy-drawer textarea::placeholder { color: var(--cmpy-text-3); }
+
+/* ============================ 轻提示 ============================ */
+#cmpy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  transform: translate(-50%, 20px);
+  background: var(--cmpy-text);
+  color: var(--cmpy-surface);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: var(--cmpy-font);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 100000;
+}
+#cmpy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============================ 视频增强 ============================ */
+#cmpy-video-bar {
+  position: absolute;
+  left: 14px;
+  bottom: 58px;
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(12, 14, 18, 0.72);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: var(--cmpy-font);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.cmpy-player:hover #cmpy-video-bar,
+#cmpy-video-bar:hover { opacity: 1; }
+#cmpy-video-bar button {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+#cmpy-video-bar button:hover { background: rgba(255, 255, 255, 0.16); }
+#cmpy-video-bar button.active { background: var(--cmpy-accent); color: #fff; }
+.cmpy-player { position: relative; }
+
+/* 自动连播倒计时 */
+#cmpy-next-overlay {
+  position: absolute;
+  right: 16px;
+  bottom: 58px;
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 252px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(20, 20, 22, 0.9);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: var(--cmpy-font);
+}
+#cmpy-next-overlay p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+}
+#cmpy-next-overlay strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+#cmpy-next-overlay .cmpy-next-count {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+#cmpy-next-overlay .cmpy-next-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+#cmpy-next-overlay button {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 7px;
+  background: transparent;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+#cmpy-next-overlay button:hover { background: rgba(255, 255, 255, 0.1); }
+#cmpy-next-overlay button[data-act="play"] {
+  border-color: #f5f5f7;
+  background: #f5f5f7;
+  color: #111113;
+}
+#cmpy-next-overlay button[data-act="play"]:hover { background: #fff; }
+
+/* 宽屏观影模式 */
+.cmpy-video-wide .cmpy-player,
+.cmpy-video-wide .prism-player {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2147483001 !important;
+  border-radius: 0 !important;
+  background: #000 !important;
+}
+.cmpy-video-wide .prism-player video { height: 100% !important; }
+
+/* ============================ 其他通用优化 ============================ */
+html[data-cmpy-theme] :is(.cmpy-page-courses, .cmpy-page-search) #public_main {
+  padding-bottom: 30px;
+}
+
+/* 搜索结果计数 */
+html[data-cmpy-theme] .cmpy-page-search .search_num,
+html[data-cmpy-theme] .cmpy-page-search #search_num {
+  color: var(--cmpy-text-2) !important;
+}
+
+/* 弹层 */
+html[data-cmpy-theme] .layui-layer,
+html[data-cmpy-theme] .layui-layer-page {
+  border-radius: 14px !important;
+  overflow: hidden;
+}
+
+/* 输入框 */
+html[data-cmpy-theme] .cmpy-page-courses input,
+html[data-cmpy-theme] .cmpy-page-search input {
+  color: var(--cmpy-text) !important;
+}
+
+/* 筛选隐藏 */
+#public_course_list > li.item[data-cmpy-hidden] { display: none !important; }
+
+/* ==========================================================================
+   首页 Hero — 借鉴知更的排版：大标题、克制的强调色、胶囊搜索、充足留白
+   ========================================================================== */
+html[data-cmpy-theme] body.cmpy-page-home #content_box { height: 100vh; }
+html[data-cmpy-theme] body.cmpy-page-home #public_main {
+  min-height: calc(100vh - 95px);
+  padding: 56px 24px 96px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+}
+
+body.cmpy-page-home #public_main > .wrap_96 {
+  width: 100%;
+  max-width: 1120px;
+  position: relative;
+  display: block;
+}
+body.cmpy-page-home .pos_abs_center {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+body.cmpy-page-home .search_box {
+  width: min(720px, 100%) !important;
+  margin: 0 auto !important;
+  text-align: center;
+}
+body.cmpy-page-home .search_box > img { display: none !important; }
+
+.cmpy-hero-head { margin: 0 auto 36px; }
+.cmpy-hero-head .cmpy-kicker {
+  margin: 0;
+  color: var(--cmpy-text-3) !important;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.cmpy-hero-head h1 {
+  margin: 16px 0 16px;
+  color: var(--cmpy-ink) !important;
+  font-size: clamp(40px, 5.2vw, 64px);
+  font-weight: 650;
+  line-height: 1.16;
+  letter-spacing: -0.022em;
+}
+.cmpy-hero-head h1 span { color: var(--cmpy-accent); }
+.cmpy-hero-head .cmpy-sub {
+  margin: 0;
+  color: var(--cmpy-text-2) !important;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+}
+
+body.cmpy-page-home #public_main .search {
+  margin-top: 0 !important;
+  height: 64px !important;
+  padding: 6px 6px 6px 10px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cmpy-surface) !important;
+  border: 1px solid var(--cmpy-border);
+  border-radius: 999px !important;
+  box-shadow: var(--cmpy-shadow-hover);
+  overflow: visible;
+}
+body.cmpy-page-home #public_main .search:focus-within {
+  border-color: var(--cmpy-accent);
+  box-shadow: 0 0 0 4px var(--cmpy-accent-soft), var(--cmpy-shadow-hover);
+}
+body.cmpy-page-home #public_main .search input {
+  flex: 1;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-size: 17px !important;
+  color: var(--cmpy-text) !important;
+}
+body.cmpy-page-home #public_main .search input::placeholder { color: var(--cmpy-text-3) !important; }
+body.cmpy-page-home #public_main .search button {
+  flex: 0 0 auto;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 30px !important;
+  border: 0;
+  border-radius: 999px !important;
+  background: var(--cmpy-ink) !important;
+  color: var(--cmpy-on-ink) !important;
+  font-size: 15px !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+body.cmpy-page-home #public_main .search button:hover { opacity: 0.86; }
+
+body.cmpy-page-home #public_main .introduce {
+  position: static !important;
+  width: 100% !important;
+  max-width: 680px;
+  margin: 60px auto 0 !important;
+  color: var(--cmpy-text-2) !important;
+  font-size: 14px !important;
+  line-height: 2 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+}
+body.cmpy-page-home #public_main .introduce p { margin: 0; }
+
+/* 首页侧栏在宽屏上贴左，窄屏时回到常规流 */
+@media (max-width: 1180px) {
+  body.cmpy-page-home #public_vertical_nav.cmpy-rail {
+    position: static !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  body.cmpy-page-home #public_vertical_nav.cmpy-rail li { width: auto !important; }
+}
